@@ -1,7 +1,9 @@
-import { DELETE_ARTICLE, FILTER_ARTICLES_BY_ID } from '../constants'
+import { DELETE_ARTICLE, FILTER_ARTICLES_BY_ID, FILTER_ARTICLES_BY_DATE } from '../constants'
 import {articles as defaultArticles} from '../fixtures'
+import moment from 'moment'
 
 export default (articles = defaultArticles, action) => {
+
     const { type, payload } = action;
 
     switch (type) {
@@ -16,10 +18,20 @@ export default (articles = defaultArticles, action) => {
             }
 
             return defaultArticles.filter(article => {
-
                 return payload.ids.indexOf(article.id) !== -1;
             });
 
+        case FILTER_ARTICLES_BY_DATE:
+
+            const {from, to} = payload;
+            if (!to) {
+                return defaultArticles;
+            }
+
+            return defaultArticles.filter(article => {
+                console.log(moment(article.date).isBetween(from, to));
+                return moment(article.date).isBetween(from, to);
+            });
     }
 
     return articles
