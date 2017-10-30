@@ -6,6 +6,7 @@ import Loader from './Loader'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {loadArticleComments} from '../AC'
+import Localize from './Localize.js'
 
 class CommentList extends Component {
     static defaultProps = {
@@ -26,7 +27,8 @@ class CommentList extends Component {
 
     render() {
         const {isOpen, toggleOpen} = this.props
-        const text = isOpen ? 'hide comments' : 'show comments'
+        const text = isOpen ?
+            <Localize>hide comments</Localize> : <Localize>show comments</Localize>
         console.log('---', 4)
         return (
             <div>

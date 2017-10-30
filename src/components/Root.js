@@ -7,26 +7,37 @@ import CommentsPage from './Routes/CommentsPage'
 import {Route, Link, NavLink, Switch, Redirect} from 'react-router-dom'
 import NotFoundPage from './Routes/NotFoundPage'
 import Menu, { MenuItem } from './Menu'
+import Localize from './Localize.js'
+import SwitchLocalize from './SwitchLocalize.js'
 
 export default class Root extends Component {
     state = {
-        username: ''
+        username: '',
+        lang: 'en'
     }
 
     static childContextTypes = {
-        user: PropTypes.string
+        user: PropTypes.string,
+        globalLang: PropTypes.string
     }
 
     getChildContext() {
         return {
-            user: this.state.username
+            user: this.state.username,
+            globalLang: this.state.lang
         }
     }
+
+    changeLang = (lang) => {
+        this.setState({lang});
+    };
 
     render() {
         console.log('---', 1)
         return (
             <div>
+                <SwitchLocalize changeLang={this.changeLang} lang={this.state.lang}/>
+                <Localize>delete me</Localize>
                 <h2>Menu</h2>
                 <Menu>
                     <MenuItem link="counter" />
