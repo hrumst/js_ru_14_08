@@ -13,7 +13,7 @@ class Article extends Component {
         id: PropTypes.string.isRequired,
         article: PropTypes.shape({
             id: PropTypes.string,
-            title: PropTypes.string.isRequired,
+            title: PropTypes.string,
             text: PropTypes.string
         }),
         isOpen: PropTypes.bool,
@@ -105,9 +105,13 @@ class Article extends Component {
 */
 }
 
-export default connect((state, props) => ({
-    article: state.articles.entities.get(props.id)
-}), (dispatch, ownProps) => ({
+const stateToProps = (state, props) => {
+    return {
+        article: state.articles.entities.get(props.id)
+    }
+};
+
+export default connect(stateToProps, (dispatch, ownProps) => ({
     deleteArticle: () => dispatch(deleteArticle(ownProps.id)),
     loadArticle: () => dispatch(loadArticleById(ownProps.id))
 }), null, {pure: false})(Article)
